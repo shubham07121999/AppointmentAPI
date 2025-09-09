@@ -1,0 +1,15 @@
+# Visual Studio user-specific files
+.vs/
+*.user
+*.suo
+
+# Build results
+bin/
+obj/
+out/
+Debug/
+Release/
+
+# Other
+*.log
+*.vsidx
