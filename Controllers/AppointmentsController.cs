@@ -25,7 +25,7 @@ namespace AppointmentAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Appointment>> CreateAppointment([FromBody] Appointment appointment)
+        public async Task<IActionResult> CreateAppointment([FromBody] Appointment appointment)
         {
 
             //Checking validation for patient name and doctor name must be present.
@@ -42,7 +42,7 @@ namespace AppointmentAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAppointment(int id,[FromBody] Appointment appointment)
+        public async Task<IActionResult> UpdateAppointment(int id,[FromBody]Appointment appointment)
         {
             if (id != appointment.Id)
                 return BadRequest();
@@ -56,6 +56,13 @@ namespace AppointmentAPI.Controllers
         {
             await _repository.DeleteAsync(id);
             return NoContent();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Appointment>> GetAppointmentsByID(int id)
+        {
+            var appointments = await _repository.GetByIdAsync(id);
+            return Ok(appointments);
         }
     }
 }

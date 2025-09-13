@@ -21,7 +21,15 @@ namespace AppointmentAPI
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularApp", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200") // Angular dev server
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
 
             var app = builder.Build();
 
@@ -37,6 +45,8 @@ namespace AppointmentAPI
                 app.UseSwaggerUI();
             }
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAngularApp");
             app.UseAuthorization();
             app.MapControllers();
 
